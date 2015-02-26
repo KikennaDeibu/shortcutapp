@@ -1,7 +1,13 @@
 <p>
-	Use a keyboard shortcut! {{ shortcut }}
+	Use a keyboard shortcut! {{ shortcut.keyCommand }}
  </p>
 
- <button class='shortcut-reminder'>
- Don't show this again
+ <button class='ignore-all-shortcuts'>
+ Don't show any of these again
+ </button>
+
+<br>
+
+ <button class='ignore-shortcut {{shortcut.name}}'>
+ Don't show me this shortcut again
  </button>

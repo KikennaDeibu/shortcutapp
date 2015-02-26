@@ -5,21 +5,46 @@
       'app.activated':'init'
     },
 
-    shortcutSelectors: {
-      ".tab.add": "ctrl-alt-n"
-    },
+    shortcuts: [{
+            selector: ".tab.add",
+            name: "add-ticket",
+            keyCommand: "ctrl-alt-n"
+        },
+
+        {
+            selector: ".dashboard.toolbar_link",
+            name: "go-home",
+            keyCommand: "ctrl-alt-h"
+        },
+
+        {
+            selector: ".header-search",
+            name: "search",
+            keyCommand: "ctrl-alt-f"
+        }
+    ],
 
     init: function() {
       this.showNotice = true;
-      var that = this;
+      this.ignoredShortcuts = [];
 
-      var setupEvents = function(shortcut, selector) {
+
+      var app = this;
+
+      var setupEvents = function(shortcut) {
         var $ = this.$;
 
-        $(selector).click(function(){
+        $(shortcut.selector).click(function(){
 
-          if (that.showNotice) {
-            var notificationHTML = that.renderTemplate("notification", {
+
+          var ignoredShortcut = _(app.ignoredShortcuts).contains(shortcut.name);
+
+          if (ignoredShortcut) {
+            return;
+          }
+
+          if (app.showNotice) {
+            var notificationHTML = app.renderTemplate("notification", {
               shortcut: shortcut
             });
 
@@ -27,13 +52,20 @@
 
             var setupClickHandler = function(){
               var onDontShowClick = function(){
-                that.showNotice = false;
+                app.showNotice = false;
 
-                var growlNotification = $(this).parents(".jGrowl");
-                growlNotification.hide();
+                // var growlNotification = $(this).parents(".jGrowl");
+                // growlNotification.hide();
               };
 
-              $(".shortcut-reminder").click(onDontShowClick);
+              $(".ignore-all-shortcuts").click(onDontShowClick);
+
+              $(".ignore-shortcut." + shortcut.name).click(function(){
+                app.ignoredShortcuts.push(shortcut.name);
+
+                var growlNotification = $(this).parents(".jGrowl-notification");
+                growlNotification.hide();
+              });
             };
 
 
@@ -42,8 +74,8 @@
         });
       };
 
-      _(this.shortcutSelectors).each(function(shortcut, selector) {
-        setupEvents(shortcut, selector);
+      _(this.shortcuts).each(function(shortcut) {
+        setupEvents(shortcut);
       });
     }
   };
@@ -55,5 +87,7 @@
 // services is the worst name ever
 // services.notify docs doesn't have correct function signature
 // services.notify should have callback?
+// ctrl-alt-v doesn't work?!
+// search + growl == bleh
 
 
