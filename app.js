@@ -5,17 +5,25 @@
       'app.activated':'init'
     },
 
+    shortcutSelectors: {
+      ".tab.add": "ctrl-alt-n"
+    },
+
     init: function() {
       this.showNotice = true;
       var that = this;
 
-      var setupEvents = function() {
+      var setupEvents = function(shortcut, selector) {
         var $ = this.$;
 
-        $(".tab.add").click(function(){
+        $(selector).click(function(){
 
           if (that.showNotice) {
-            services.notify("<p>Use a keyboard shortcut</p> <button class='shortcut-reminder'>Don't show this again</button>", 'notice', 6000);
+            var notificationHTML = that.renderTemplate("notification", {
+              shortcut: shortcut
+            });
+
+            services.notify(notificationHTML);
 
             var setupClickHandler = function(){
               var onDontShowClick = function(){
@@ -34,7 +42,9 @@
         });
       };
 
-      setupEvents();
+      _(this.shortcutSelectors).each(function(shortcut, selector) {
+        setupEvents(shortcut, selector);
+      });
     }
   };
 

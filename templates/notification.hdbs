@@ -1,0 +1,7 @@
+<p>
+	Use a keyboard shortcut! {{ shortcut }}
+ </p>
+
+ <button class='shortcut-reminder'>
+ Don't show this again
+ </button>
