@@ -24,9 +24,12 @@
         }
     ],
 
+    getIgnoredShortcuts: function(){
+      return this.store('ignoredShortcuts') || [];
+    },
+
     init: function() {
       this.showNotice = true;
-      this.ignoredShortcuts = [];
 
 
       var app = this;
@@ -35,9 +38,7 @@
         var $ = this.$;
 
         $(shortcut.selector).click(function(){
-
-
-          var ignoredShortcut = _(app.ignoredShortcuts).contains(shortcut.name);
+          var ignoredShortcut = _(app.getIgnoredShortcuts()).contains(shortcut.name);
 
           if (ignoredShortcut) {
             return;
@@ -54,14 +55,16 @@
               var onDontShowClick = function(){
                 app.showNotice = false;
 
-                // var growlNotification = $(this).parents(".jGrowl");
-                // growlNotification.hide();
+                var growlNotification = $(this).parents(".jGrowl-notification");
+                growlNotification.hide();
               };
 
               $(".ignore-all-shortcuts").click(onDontShowClick);
 
               $(".ignore-shortcut." + shortcut.name).click(function(){
-                app.ignoredShortcuts.push(shortcut.name);
+                var ignoredShortcuts = app.getIgnoredShortcuts();
+                ignoredShortcuts.push(shortcut.name);
+                app.store("ignoredShortcuts", ignoredShortcuts);
 
                 var growlNotification = $(this).parents(".jGrowl-notification");
                 growlNotification.hide();
