@@ -1,13 +1,33 @@
-<p>
-	Use a keyboard shortcut! {{ shortcut.keyCommand }}
- </p>
+<style>
+.shortcut-app-notification-message {
+	text-align: center;
+	font-size: 12px;
+	margin-left: 2px;
+}
+.shortcut-app-shortcut {
+	color: #78A300;
+}
 
- <button class='ignore-all-shortcuts'>
- Don't show any of these again
- </button>
+.button-props {
+	padding: 30px;
+	width:40%;
+	height: 10px;
+	margin-top:10px;
+}
 
-<br>
+</style>
 
- <button class='ignore-shortcut {{shortcut.name}}'>
- Don't show me this shortcut again
- </button>
+<div>
+	<div class="shortcut-app-notification-message">
+		Use a keyboard shortcut!<br/>
+		<strong class="shortcut-app-shortcut">{{ shortcut.keyCommand }}</strong> to <strong>{{ shortcut.description }}</strong>
+	</div>
+	<div class="row-fluid">
+		<button class="span6 button-props">
+			Dismiss
+		</button>
+		<button class="span6 button-props">
+			Dismiss All
+		</button>
+	</div>
+</div>

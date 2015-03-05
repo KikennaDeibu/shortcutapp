@@ -8,19 +8,22 @@
     shortcuts: [{
             selector: ".tab.add",
             name: "add-ticket",
-            keyCommand: "ctrl-alt-n"
+            keyCommand: "ctrl-alt-n",
+            description: 'Add a ticket'
         },
 
         {
             selector: ".dashboard.toolbar_link",
             name: "go-home",
-            keyCommand: "ctrl-alt-h"
+            keyCommand: "ctrl-alt-h",
+            description: 'Go Home'
         },
 
         {
             selector: ".header-search",
             name: "search",
-            keyCommand: "ctrl-alt-f"
+            keyCommand: "ctrl-alt-f",
+            description: 'Search'
         }
     ],
 
